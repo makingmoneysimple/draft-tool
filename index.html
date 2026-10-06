@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Stocks & Shares ISA 2026/27 | Making Money Simple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Making Money Simple brand system (Oct 2026). Variable names kept from the original
+     so the calculator's JavaScript (which uses var(--accent), var(--mid) etc.) picks up the new look. */
+  :root {
+    --ink: #1B2A41;          /* navy: headings and text */
+    --navy: #1B2A41;
+    --paper: #FCEDEC;        /* blush: page background */
+    --cream: #F3EBE9;        /* soft row dividers and grey badges */
+    --accent: #F0807F;       /* MMS coral */
+    --accent-light: #FCEDEC;
+    --accent-dark: #C94F4E;
+    --accent2: #C94F4E;
+    --butter: #FFF5D6;       /* pale yellow callouts */
+    --gold: #c9a84c;
+    --mid: #4A5568;
+    --border: #E5DDDB;
+    --white: #ffffff;
+    --head: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'DM Sans', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --shadow: 0 18px 40px -30px rgba(27,42,65,0.35);
+    --shadow-lg: 0 24px 48px -28px rgba(27,42,65,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--body);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--paper);
+    color: var(--ink);
+    padding: clamp(40px, 6vw, 72px) 24px 28px;
+    text-align: center;
+  }
+  .a-rule {
+    width: 48px; height: 4px;
+    background: var(--accent);
+    margin: 18px auto;
+    border-radius: 4px;
+  }
+  .header-inner { position: relative; }
+  header h1 {
+    font-family: var(--head);
+    font-size: clamp(32px, 4.6vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  header h1 span {
+    color: var(--ink);
+    display: block;
+    background: linear-gradient(transparent 62%, #FFE7A0 62%);
+    width: fit-content;
+    margin: 4px auto 0;
+    padding: 0 6px;
+  }
+  header p {
+    color: var(--mid);
+    font-size: 16px;
+    max-width: 520px;
+    margin: 0 auto 24px;
+    line-height: 1.7;
+  }
+  .header-meta {
+    font-family: var(--head);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--mid);
+  }
+  .header-nfa-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--butter);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-family: var(--head);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .header-stats { display: flex; justify-content: center; gap: 32px; margin: 24px 0 20px; flex-wrap: wrap; }
+  .header-stat { text-align: center; }
+  .header-stat-val { font-family: var(--head); font-size: 22px; font-weight: 800; color: var(--ink); display: block; }
+  .header-stat-val em { color: var(--accent-dark); font-style: normal; }
+  .header-stat-label { font-size: 12px; color: var(--mid); }
+
+  /* ── NAV TABS (pill switcher, sticks to the top while scrolling) ── */
+  .tab-nav {
+    background: var(--paper);
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-btn {
+    padding: 13px 24px;
+    font-family: var(--head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--white);
+    border: none;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 2px var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+  }
+  .tab-btn:hover { background: #F7F1F0; }
+  .tab-btn.active { background: var(--ink); color: #fff; }
+  .tab-btn:focus-visible, .calc-btn:focus-visible, .filter-chip:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* ── MAIN LAYOUT ── */
+  .container { max-width: 1140px; margin: 0 auto; padding: 28px 20px 16px; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border: 0;
+    border-radius: 24px;
+    padding: clamp(24px, 3vw, 36px);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .card-title {
+    font-family: var(--head);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .card-subtitle { font-size: 14px; color: var(--mid); margin-bottom: 24px; }
+
+  /* ── INPUTS ── */
+  .input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    margin-bottom: 28px;
+  }
+  .input-group label {
+    display: block;
+    font-family: var(--head);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .input-group input, .input-group select {
+    width: 100%;
+    height: 54px;
+    padding: 0 18px;
+    border: 1.5px solid #DDD5D3;
+    border-radius: 14px;
+    font-family: var(--body);
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .input-group input:focus, .input-group select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(240,128,127,0.25);
+  }
+  .input-hint { font-size: 13px; color: var(--mid); margin-top: 6px; }
+
+  .calc-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    border: none;
+    border-radius: 999px;
+    padding: 18px 32px;
+    font-family: var(--head);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.15s;
+  }
+  .calc-btn:hover { background: #F39594; transform: translateY(-1px); }
+
+  /* ── INVEST TYPE TOGGLE ── */
+  .toggle-group { display: flex; gap: 10px; margin-top: 2px; }
+  .input-group .toggle-option,
+  .toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    height: 54px;
+    padding: 0 18px;
+    border: 1.5px solid #DDD5D3;
+    border-radius: 14px;
+    background: var(--white);
+    font-family: var(--head) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--mid) !important;
+    margin: 0 !important;
+    transition: all 0.15s;
+    flex: 1;
+    justify-content: center;
+  }
+  .toggle-option input[type="radio"] { display: none; }
+  .toggle-option:has(input:checked) {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #fff !important;
+  }
+
+  /* ── RESULTS LEADERBOARD ── */
+  #results { margin-top: 32px; display: none; scroll-margin-top: 84px; } /* keeps "Your Results" clear of the sticky tabs */
+  .results-header {
+    font-family: var(--head);
+    font-size: clamp(24px, 2.4vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    margin-bottom: 6px;
+  }
+  .results-sub { font-size: 14px; color: var(--mid); margin-bottom: 16px; }
+  .results-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .results-table thead th {
+    padding: 14px 18px;
+    font-family: var(--head);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--mid);
+    background: #FBF6F5;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .results-table thead th:last-child { text-align: right; }
+  .results-table tbody tr { transition: background 0.15s; }
+  .results-table tbody td { border-bottom: 1px solid var(--cream); }
+  .results-table tbody tr:last-child td { border-bottom: none; }
+  .results-table tbody tr:hover { background: #FDF8F7; }
+  .results-table tbody tr.is-best { background: var(--butter); }
+  .results-table tbody tr.is-best:hover { background: var(--butter); }
+  .results-table td { padding: 13px 18px; vertical-align: middle; font-size: 14px; }
+  .res-rank {
+    font-family: var(--head);
+    font-size: 14px;
+    font-weight: 800;
+    color: #B9AFAD;
+    width: 36px;
+  }
+  .is-best .res-rank { color: var(--ink); }
+  .res-name { font-family: var(--head); font-weight: 700; font-size: 15px; }
+  .res-type { font-size: 12px; color: var(--mid); font-weight: 400; }
+  .res-note-mobile { display: none; }
+  .res-note { font-size: 13px; color: var(--mid); }
+  .res-cost {
+    font-family: var(--head);
+    font-size: 17px;
+    font-weight: 800;
+    text-align: right;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .res-cost.best { color: var(--ink); }
+  .res-cost.worst { color: var(--accent2); }
+  .res-best-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--head);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-left: 6px;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  /* ── ASSUMPTIONS BOX ── */
+  .assumptions {
+    background: var(--butter);
+    border: 0;
+    border-radius: 18px;
+    padding: 18px 22px;
+    font-size: 14px;
+    color: var(--ink);
+    margin-top: 20px;
+  }
+  .assumptions strong { display: block; margin-bottom: 6px; font-family: var(--head); }
+
+  /* ── COMPARISON TABLE ── */
+  .filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .filter-chip {
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 0;
+    box-shadow: inset 0 0 0 1.5px #DDD5D3;
+    font-family: var(--head);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--white);
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  .filter-chip:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+  .filter-chip.active { background: var(--ink); box-shadow: none; color: #fff; }
+  .filter-label { font-family: var(--head); font-size: 14px; font-weight: 700; color: var(--ink); margin-right: 4px; }
+  .filter-row + .table-wrap { margin-top: 8px; }
+  .details-toggle {
+    margin-left: auto;
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 0;
+    background: var(--white);
+    box-shadow: inset 0 0 0 2px var(--ink);
+    font-family: var(--head);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .details-toggle:hover { background: var(--ink); color: #fff; }
+  .details-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  /* Short view: Platform, Sign Up Link, Sign Up Bonus, Platform Fee, Mutual Fund Fee, ETF Fee, FX Fee, FCA Regulated, Trustpilot */
+  #comparison-table.compact th:nth-child(7), #comparison-table.compact td:nth-child(7),
+  #comparison-table.compact th:nth-child(n+11), #comparison-table.compact td:nth-child(n+11) { display: none; }
+  /* let the 9 short-view columns share the width so they fit without sideways scrolling on desktop */
+  @media (min-width: 900px) {
+    #comparison-table.compact th { min-width: 0 !important; }
+    #comparison-table.compact th:first-child, #comparison-table.compact td:first-child { min-width: 150px !important; }
+  }
+
+  .table-wrap { overflow-x: auto; overflow-y: visible; border-radius: 16px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    text-align: left;
+    padding: 12px 14px;
+    font-family: var(--head);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    border-bottom: 1px solid var(--border);
+    white-space: normal;
+    min-width: 80px;
+    background: #FBF6F5;
+    position: sticky;
+    top: 0;
+    vertical-align: bottom;
+    line-height: 1.35;
+    z-index: 10;
+  }
+  /* Sticky first column */
+  #comparison-table td:first-child,
+  #comparison-table th:first-child {
+    position: sticky;
+    left: 0;
+    background: var(--white);
+    z-index: 5;
+    box-shadow: 1px 0 0 var(--border), 6px 0 10px -8px rgba(27,42,65,0.25);
+  }
+  #comparison-table th:first-child { background: #FBF6F5; z-index: 15; }
+  /* Sticky ticker column for fund table */
+  #fund-table td:first-child,
+  #fund-table th:first-child {
+    position: sticky;
+    left: 0;
+    background: var(--white);
+    z-index: 5;
+    box-shadow: 1px 0 0 var(--border), 6px 0 10px -8px rgba(27,42,65,0.25);
+  }
+  #fund-table th:first-child { background: #FBF6F5; z-index: 15; }
+  th .fn {
+    display: inline-block;
+    width: 15px; height: 15px;
+    background: var(--cream);
+    color: var(--ink);
+    border-radius: 50%;
+    font-size: 9px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 15px;
+    cursor: help;
+    margin-left: 3px;
+    vertical-align: middle;
+  }
+  /* Links inside the tables: navy with a coral underline, like the rest of the site */
+  .table-wrap a, #assumptions-box a { color: var(--ink) !important; text-decoration: underline; text-decoration-color: var(--accent) !important; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  #fund-table td:first-child a { border-bottom: 0 !important; }
+  /* JS tooltip */
+  .js-tooltip {
+    position: fixed;
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 9px 13px;
+    border-radius: 10px;
+    white-space: normal;
+    max-width: 240px;
+    z-index: 9999;
+    line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(27,42,65,0.3);
+    pointer-events: none;
+    display: none;
+  }
+  tbody tr { border-bottom: 1px solid var(--cream); transition: background 0.15s; }
+  tbody tr:hover { background: #FDF8F7; }
+  td { padding: 13px 14px; vertical-align: middle; }
+  td:first-child { font-family: var(--head); font-weight: 700; font-size: 14px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .badge-green { background: #E3F4EA; color: #1E6E43; }
+  .badge-red { background: #FCE6E4; color: #B03A2E; }
+  .badge-yellow { background: var(--butter); color: #8A6512; }
+  .badge-grey { background: var(--cream); color: var(--ink); }
+  .td-yes { background: #EEF8F2; color: #1E6E43; font-weight: 700; font-size: 13px; text-align: left; padding-left: 14px; }
+  .td-no { color: var(--mid); font-size: 13px; text-align: left; padding-left: 14px; }
+  .td-fca { background: #EEF8F2; color: #1E6E43; font-weight: 700; font-size: 13px; text-align: left; padding-left: 14px; }
+
+  .score-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 26px; border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+  }
+  .score-a { background: #E3F4EA; color: #1E6E43; }
+  .score-b { background: var(--butter); color: #8A6512; }
+  .score-c { background: #FCE6E4; color: #B03A2E; }
+
+  /* ── LOGOS ── */
+  .platform-cell { display: flex; align-items: center; gap: 10px; }
+  .platform-logo {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .platform-logo-fallback {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--navy);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--head);
+  }
+
+  .footnotes {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .footnotes span strong { color: var(--ink); }
+  sup.fnref { font-size: 9px; font-weight: 800; color: var(--accent-dark); vertical-align: super; line-height: 0; margin-left: 1px; }
+  .etf-check { font-size: 16px; text-align: center; }
+
+  /* Sign-up bonuses box (inline styles in the HTML are overridden here to match the site) */
+  #signup-disclaimers { background: var(--butter) !important; border: 0 !important; border-radius: 20px !important; padding: 20px 24px !important; font-size: 13px !important; }
+  #signup-disclaimers > div:first-child { font-size: 15px !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--ink) !important; font-weight: 800 !important; }
+  #signup-disclaimers div { color: var(--ink) !important; }
+
+  /* ── INFO BOXES ── */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .info-box { background: var(--white); border: 0; border-radius: 20px; padding: 20px 22px; box-shadow: var(--shadow); }
+  .info-box-title { font-family: var(--head); font-size: 13px; font-weight: 700; color: var(--mid); margin-bottom: 8px; }
+  .info-box-val { font-family: var(--head); font-size: 22px; font-weight: 800; color: var(--ink); }
+  .info-box-sub { font-size: 13px; color: var(--mid); margin-top: 4px; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 20px 20px 32px;
+    font-size: 13px;
+    color: var(--mid);
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    line-height: 1.8;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  footer a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    font-size: 14px;
+    color: var(--mid);
+    background: var(--white);
+    border-radius: 18px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+  .disclaimer strong { color: var(--ink); }
+
+  /* ── TOOLTIP ── */
+  [data-tip] { position: relative; cursor: help; border-bottom: 1px dashed #B9AFAD; }
+  [data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    padding: 7px 11px;
+    border-radius: 8px;
+    z-index: 10;
+    pointer-events: none;
+    max-width: 260px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .calc-btn, .tab-btn, .filter-chip, .toggle-option { transition: none; }
+  }
+
+  @media (max-width: 640px) {
+    /* ── HEADER ── */
+    header { padding: 32px 16px 20px; }
+    header h1 { font-size: 32px; }
+
+    /* ── TAB NAV ── */
+    .tab-nav { justify-content: stretch; gap: 6px; padding: 8px 10px 10px; }
+    .tab-btn { padding: 11px 6px; font-size: 12px; flex: 1; text-align: center; }
+
+    /* ── CONTAINER & CARDS ── */
+    .container { padding: 16px 12px 12px; }
+    .card { padding: 18px 16px; border-radius: 20px; margin-bottom: 16px; }
+    .card-title { font-size: 18px; margin-bottom: 12px; }
+    .card-subtitle { font-size: 13px; margin-bottom: 16px; }
+
+    /* ── FEE CALCULATOR INPUTS ── */
+    .input-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 20px; }
+    .toggle-group { flex-direction: row; gap: 8px; }
+    .toggle-option { padding: 0 12px; font-size: 13px !important; }
+    .calc-btn { width: 100%; text-align: center; padding: 17px 20px; }
+    #results { margin-top: 20px; }
+    .results-header { font-size: 22px; }
+    .results-sub { font-size: 12px; }
+
+    /* ── FEE CALCULATOR RESULTS - restructure for mobile ── */
+    .results-table { border-radius: 18px; }
+    .results-table thead th { font-size: 10px; padding: 10px 8px; }
+    .results-table td { padding: 11px 8px; font-size: 13px; }
+    .results-table thead th:nth-child(3) { display: none; }
+    .results-table td:nth-child(3) { display: none; }
+    .res-note-mobile { display: block; font-size: 11px; color: var(--mid); margin-top: 3px; }
+    .res-rank { width: 22px; font-size: 12px; }
+    .res-name { font-size: 14px; }
+    .res-type { font-size: 11px; }
+    .res-cost { font-size: 15px; }
+    .res-best-badge { font-size: 9px; padding: 2px 7px; margin-left: 0; }
+    .assumptions { font-size: 12px; padding: 14px 16px; }
+    .disclaimer { font-size: 12px; padding: 13px 15px; margin-top: 12px; }
+
+    /* ── FUND AVAILABILITY ── */
+    #tab-etfs .card { padding-top: 16px; }
+    thead th { position: static !important; top: auto !important; }
+
+    /* ── FULL COMPARISON ── */
+    .table-wrap { border-radius: 12px; }
+    #comparison-table th { font-size: 10px; padding: 9px 8px; top: 0; }
+    #comparison-table td { font-size: 11px; padding: 10px 8px; }
+    #comparison-table th:first-child,
+    #comparison-table td:first-child { min-width: 120px !important; }
+    .platform-logo { width: 28px; height: 28px; }
+    .platform-logo-fallback { width: 28px; height: 28px; font-size: 9px; }
+    .platform-cell { gap: 7px; }
+    .badge { font-size: 9px; padding: 2px 7px; }
+    .footnotes { font-size: 12px; }
+    #signup-disclaimers { font-size: 12px !important; padding: 14px 16px !important; }
+
+    .filter-row { gap: 6px; flex-wrap: wrap; }
+    .filter-chip { font-size: 12px; padding: 7px 13px; }
+    .details-toggle { margin-left: 0; font-size: 12px; padding: 7px 13px; }
+    #fund-table th { font-size: 10px; padding: 9px 8px; }
+    #fund-table td { font-size: 11px; padding: 10px 8px; }
+    #fund-table th:first-child,
+    #fund-table td:first-child { min-width: 80px !important; }
+    .etf-check { font-size: 13px; }
+
+    /* ── MISC ── */
+    .mobile-break { display: block; }
+    .info-grid { grid-template-columns: 1fr; gap: 10px; }
+    .info-box { padding: 14px 16px; }
+    footer { font-size: 12px; padding: 16px 14px 24px; }
+    .header-nfa-pill { font-size: 12px; padding: 6px 13px; }
+
+    html { scroll-padding-top: 120px; }
+    .fund-row:first-child td, .results-table tbody tr:first-child td { padding-top: 14px; }
+  }
+  @media (min-width: 641px) {
+    .mobile-break { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Find Your Cheapest<br><span>Stocks &amp; Shares ISA</span></h1>
+    <div class="a-rule"></div>
+    <div class="header-meta">By Ryan from Making Money Simple</div>
+    <div style="margin-top:10px"><span class="header-nfa-pill">⚠️ This is not financial advice</span></div>
+  </div>
+</header>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('calculator')">💷 Fee Calculator</button>
+  <button class="tab-btn" onclick="showTab('comparison')">📊 Full Comparison</button>
+  <button class="tab-btn" onclick="showTab('etfs')">📈 Fund Availability</button>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 1: FEE CALCULATOR
+     ════════════════════════════════════════════ -->
+<div id="tab-calculator" class="section active">
+  <div class="container">
+
+    <div class="card">
+
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Current portfolio value</label>
+          <input type="text" id="portfolio" placeholder="e.g. 10,000" inputmode="numeric">
+          <div class="input-hint">What you already have invested. Enter 0 if starting fresh.</div>
+        </div>
+        <div class="input-group">
+          <label>Monthly contribution</label>
+          <input type="text" id="monthly" placeholder="e.g. 200" inputmode="numeric">
+          <div class="input-hint">How much you plan to invest each month.</div>
+        </div>
+        <div class="input-group">
+          <label>What are you investing in?</label>
+          <div class="toggle-group">
+            <label class="toggle-option">
+              <input type="radio" name="investType" value="funds" checked>
+              <span>Mutual Funds</span>
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="investType" value="etf">
+              <span>ETFs</span>
+            </label>
+          </div>
+          <div class="input-hint">This impacts trading fees and platform fee caps on some platforms.</div>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">Calculate My Costs →</button>
+    </div>
+
+    <div id="results">
+      <div class="results-header" id="results-title">Your Results</div>
+      <div class="results-sub" id="results-sub"></div>
+      <div id="results-list"></div>
+      <div class="assumptions" id="assumptions-box"></div>
+      <div class="disclaimer">⚠️ <strong>Not financial advice.</strong> Fee calculations are estimates based on publicly available information as of April 2026. Actual costs may vary. Always check the platform's current fee schedule before investing. If you notice any issues with this tool, please let me know.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 2: FULL COMPARISON
+     ════════════════════════════════════════════ -->
+<div id="tab-comparison" class="section">
+  <div class="container">
+
+    <div class="card">
+      
+
+      <div class="filter-row">
+        <span class="filter-label">Show:</span>
+        <button class="filter-chip active" onclick="filterTable('all', this)">All platforms</button>
+        <button class="filter-chip" onclick="filterTable('nofee', this)">No platform fee</button>
+        <button class="details-toggle" onclick="toggleDetails(this)" aria-expanded="false">Show all details</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="comparison-table" class="compact">
+          <thead>
+            <tr>
+              <th style="min-width:160px">Platform</th>
+              <th style="min-width:140px">Sign Up Link *</th>
+              <th style="min-width:100px">Sign Up Bonus *</th>
+              <th style="min-width:180px">Platform Fee</th>
+              <th style="min-width:130px">Mutual Fund Trading Fee</th>
+              <th style="min-width:130px">ETF Trading Fee</th>
+              <th style="min-width:110px">Regular Investing Fee</th>
+              <th style="min-width:150px">FX Fee <sup class="fnref">3</sup></th>
+              <th style="min-width:100px">FCA Regulated</th>
+              <th style="min-width:80px">Trustpilot Score</th>
+              <th style="min-width:170px">Other Accounts Offered</th>
+              <th style="min-width:140px">Investments Offered</th>
+              <th style="min-width:110px">Fractional Shares</th>
+              <th style="min-width:110px">Auto-invest</th>
+              <th style="min-width:130px">'Pie' Feature</th>
+              <th style="min-width:110px">Flexible ISA</th>
+              <th style="min-width:160px">Interface &amp; User Experience <sup class="fnref">4</sup></th>
+              <th style="min-width:120px">Customer Service <sup class="fnref">5</sup></th>
+            </tr>
+          </thead>
+          <tbody id="comparison-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="signup-disclaimers" style="background:var(--accent-light);border:1px solid rgba(240,128,127,0.3);border-radius:10px;padding:16px 20px;margin-bottom:16px;font-size:12px;line-height:1.7">
+      <div style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">* Sign-up links &amp; bonuses</div>
+      <div style="font-weight:600;font-size:12px;color:var(--ink);margin-bottom:6px">Affiliate links: I may earn a small commission at no extra cost to you</div>
+      <div style="color:#7a2a29"><strong>Trading 212</strong> - Free fractional shares worth up to £100 when you deposit via referral link or use promo code 'MMS' in the app. Capital at risk. T&amp;Cs apply.</div>
+      <div style="color:#7a2a29;margin-top:4px"><strong>Lightyear</strong> - Free fractional share or ETF of your choice worth £10–£100 in a GIA account using code 'MMS'. Capital at risk. T&amp;Cs apply.</div>
+      <div style="color:#7a2a29;margin-top:4px"><strong>IG</strong> - Get up to £300 in free bonus shares when you open a new IG account (ISA, SIPP or GIA) using code 'MMS', invest at least £300 and stay invested for 3 months. Capital at risk. T&amp;Cs apply.</div>
+      <div style="color:#7a2a29;margin-top:4px"><strong>XTB</strong> - Sign up with code 'MMS' and make a deposit within 7 days. Capital at risk. T&amp;Cs apply.</div>
+      <div style="color:#7a2a29;margin-top:4px"><strong>InvestEngine</strong> - Sign up, deposit at least £100 and stay invested for at least 12 months to get a welcome bonus of up to £200. Capital at risk. T&amp;Cs apply.</div>
+    </div>
+
+    <div class="footnotes">
+      <span><sup class="fnref">1</sup> <strong>Vanguard</strong> - sits somewhere between Low-cost DIY and Full feature DIY; listed under Full feature DIY for comparison purposes.</span>
+      <span><sup class="fnref">2</sup> <strong>Freetrade plans</strong> - data shown is for the free Basic plan. Standard plan: £4.99/mo (lower FX fee of 0.59%, higher interest on cash). Plus plan: £9.99/mo (FX fee 0.39%, highest cash interest rate).</span>
+      <span><sup class="fnref">3</sup> <strong>FX Fee</strong> - incurred when investing in overseas stocks or non-GBP denominated funds.</span>
+      <span><sup class="fnref">4</sup> <strong>Interface and user experience</strong> - subjective rating based on personal experience.</span>
+      <span><sup class="fnref">5</sup> <strong>Customer Service</strong> - Online = app/email only. Offline = you can phone up and speak to a human directly.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TAB 3: ETF AVAILABILITY
+     ════════════════════════════════════════════ -->
+<div id="tab-etfs" class="section">
+  <div class="container">
+    <div class="card">
+      
+      <div class="filter-row">
+        <span class="filter-label">Region:</span>
+        <button class="filter-chip active" onclick="filterFundRegion('all', this)">All</button>
+        <button class="filter-chip" onclick="filterFundRegion('Global', this)">🌍 Global</button>
+        <button class="filter-chip" onclick="filterFundRegion('US', this)">🇺🇸 US</button>
+        <button class="filter-chip" onclick="filterFundRegion('UK', this)">🇬🇧 UK</button>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Type:</span>
+        <button class="filter-chip active" onclick="filterFunds('all', this)">All</button>
+        <button class="filter-chip" onclick="filterFunds('Mutual Fund', this)">Mutual Fund</button>
+        <button class="filter-chip" onclick="filterFunds('ETF', this)">ETF</button>
+      </div>
+      <div class="table-wrap">
+        <table id="fund-table">
+          <thead>
+            <tr>
+              <th style="min-width:70px">Ticker</th>
+              <th style="min-width:130px">Fund Provider</th>
+              <th style="min-width:130px">Index</th>
+              <th style="min-width:90px">Fund Type</th>
+              <th style="min-width:70px">Ongoing Fee</th>
+              <th style="min-width:130px">Dividend Policy</th>
+              <th style="min-width:200px">Note</th>
+              <th style="min-width:90px;text-align:center">Trading 212</th>
+              <th style="min-width:90px;text-align:center">Lightyear</th>
+              <th style="min-width:90px;text-align:center">InvestEngine</th>
+              <th style="min-width:90px;text-align:center">Freetrade</th>
+              <th style="min-width:90px;text-align:center">XTB</th>
+              <th style="min-width:90px;text-align:center">IG</th>
+            </tr>
+          </thead>
+          <tbody id="etf-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footnotes" style="margin-top:10px">
+      <span><sup class="fnref">1</sup> An Income (distributing) version of this fund is also available, which pays dividends out to you rather than reinvesting them.</span>
+      <span style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:block;font-weight:600;color:var(--ink)">About this table:</span>
+      <span>For each index, this table includes the most popular global funds, plus - where available - the lowest fee option, the largest by assets under management, and the Vanguard version.</span>
+      <span>Only funds with an ongoing fee of 0.30% or below are included.</span>
+      <span>All funds listed are denominated in GBP.</span>
+      <span>Where available, the Accumulation version of a fund is listed.</span>
+      <span>All funds use physical replication (full or sampling) - they hold the underlying stocks directly.</span>
+    </div>
+  </div>
+</div>
+
+<div class="js-tooltip" id="js-tooltip"></div>
+
+<footer>
+  <strong style="color:var(--ink)">Disclaimers:</strong> When investing, your capital is at risk. Past performance does not guarantee future results. This is not financial advice.<br>
+  Some links on this page are affiliate links and I may earn a small commission at no additional cost to you.<br>
+  Please reach out if any data needs updating - we offer no guarantees of 100% accuracy.
+</footer>
+
+<script>
+// ════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════
+
+const PLATFORMS = [
+  {
+    name: "Trading 212", type: "Low-cost DIY", mmsScore: 0.86, offersFunds: false, offersETF: true, trustpilot: "4.6", trustpilotReviews: "83k+", trustpilotUrl: "https://www.trustpilot.com/review/trading212.com", profitable: true,
+    platformFeePct:  { funds: 0,      etf: 0      },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: null   },
+    tradeFee:        { funds: 0,      etf: 0      },
+    regularFee:      { funds: 0,      etf: 0      },
+    fxFee: 0.0015,
+    fractional: true, autoInvest: true, pie: true, flexibleISA: true, sipp: false, ux: "Good",
+    autoInvestNote: "via 'auto invest'",
+    accounts: "S&S ISA, SIPP (being rolled out), GIA, Cash ISA",
+    investments: "Stocks, ETFs",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash only",
+    customerService: "Online",
+    signupBonus: "Free fractional shares worth up to £100 when you deposit via referral link or use promo code 'MMS' in the app. Capital at risk. T&Cs apply.",
+    signupBonusAffiliate: true,
+    feeNote: { funds: "No platform or trading fees.", etf: "No platform or trading fees." },
+    signupUrl: "https://www.trading212.com/join/MMS", signupAffiliate: true,
+    logo: "https://www.google.com/s2/favicons?domain=trading212.com&sz=64",
+  },
+  {
+    name: "InvestEngine", type: "Low-cost DIY", mmsScore: 0.76, offersFunds: false, offersETF: true, trustpilot: "4.7", trustpilotReviews: "3k+", trustpilotUrl: "https://www.trustpilot.com/review/www.investengine.com", profitable: false,
+    platformFeePct:  { funds: 0,      etf: 0      },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: null   },
+    tradeFee:        { funds: 0,      etf: 0      },
+    regularFee:      { funds: 0,      etf: 0      },
+    fxFee: 0,
+    fxFeeNote: "all investments are GBP denominated",
+    fractional: true, autoInvest: true, pie: true, flexibleISA: true, sipp: true, ux: "Good",
+    autoInvestNote: "via 'savings plan'",
+    accounts: "S&S ISA, SIPP, GIA, Business Account",
+    investments: "ETFs only",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash only",
+    customerService: "Online",
+    signupBonus: "Sign up, deposit at least £100 and stay invested for at least 12 months to get a welcome bonus of up to £200. Capital at risk. T&Cs apply.",
+    signupBonusAffiliate: false,
+    feeNote: { funds: "No platform or trading fees. ETFs only.", etf: "No platform or trading fees. ETFs only." },
+    signupUrl: "https://investengine.com/", signupAffiliate: false,
+    logo: "https://www.google.com/s2/favicons?domain=investengine.com&sz=64",
+  },
+  {
+    name: "Lightyear", type: "Low-cost DIY", mmsScore: 0.83, offersFunds: false, offersETF: true, trustpilot: "4.7", trustpilotReviews: "2k+", trustpilotUrl: "https://www.trustpilot.com/review/lightyear.com", profitable: false,
+    platformFeePct:  { funds: 0,      etf: 0      },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: null   },
+    tradeFee:        { funds: 0,      etf: 0      },
+    regularFee:      { funds: 0,      etf: 0      },
+    fxFee: 0.001,
+    fractional: true, autoInvest: true, pie: true, flexibleISA: true, sipp: false, ux: "Brilliant",
+    accounts: "S&S ISA, GIA, Cash ISA",
+    accountsNote: "💼 Business Account",
+    accountsSubNote: "note: this has a different fee structure",
+    investments: "Stocks, ETFs",
+    fractionalNote: "largely — <a href='https://lightyear.com/en/funds/explore' target='_blank' style='color:var(--accent);text-decoration:underline'>check screener</a> for full availability",
+    autoInvestNote: "via 'repeat order' or 'Plan'",
+    pieNote: "called 'Plans'",
+    flexibleISANote: null,
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash only",
+    customerService: "Online",
+    signupBonus: "Free fractional share or ETF of your choice worth £10–£100 in a GIA account using code 'MMS'. Capital at risk. T&Cs apply.",
+    signupBonusAffiliate: true,
+    feeNote: { funds: "No platform or trading fees.", etf: "No platform or trading fees." },
+    signupUrl: "http://lightyear.com/makingmoneysimple", signupAffiliate: true,
+    logo: "https://www.google.com/s2/favicons?domain=lightyear.com&sz=64",
+  },
+  {
+    name: "Freetrade", type: "Low-cost DIY", mmsScore: 0.72, offersFunds: true, offersETF: true, trustpilot: "4.2", trustpilotReviews: "7k+", trustpilotUrl: "https://www.trustpilot.com/review/freetrade.io", logoBg: "#ff3c6e", profitable: true,
+    platformFeePct:  { funds: 0,      etf: 0      },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: null   },
+    tradeFee:        { funds: 0,      etf: 0      },
+    regularFee:      { funds: 0,      etf: 0      },
+    fxFee: 0.0099,
+    fractional: true, autoInvest: true, pie: true, flexibleISA: true, sipp: true, ux: "Brilliant",
+    fractionalNote: "US shares only",
+    fractionalLabel: "Partly",
+    autoInvestNote: "via 'recurring order'",
+    accounts: "S&S ISA, SIPP, GIA, Junior ISA",
+    investments: "Stocks, ETFs, Mutual funds",
+    platformFeeNote: "on Basic plan",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash + in specie",
+    customerService: "Online",
+    signupBonus: null,
+    signupBonusAffiliate: false,
+    feeNote: { funds: "No platform or trading fees. Offers mutual funds.", etf: "No platform or trading fees. Also offers mutual funds." },
+    freetradePlansNote: true,
+    signupUrl: "https://freetrade.io/", signupAffiliate: false,
+    logo: "https://www.google.com/s2/favicons?domain=freetrade.io&sz=64",
+    logoBg: "#ff3c6e",
+  },
+  {
+    name: "IG", type: "Low-cost DIY", mmsScore: 0.62, offersFunds: false, offersETF: true, trustpilot: "3.8", trustpilotReviews: "9k+", trustpilotUrl: "https://www.trustpilot.com/review/ig.com", profitable: true,
+    platformFeePct:  { funds: 0,      etf: 0      },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: null   },
+    tradeFee:        { funds: 0,      etf: 0      },
+    regularFee:      { funds: null,   etf: null   },
+    fxFee: 0.007,
+    fractional: false, autoInvest: false, pie: false, flexibleISA: true, sipp: true, ux: "Good",
+    accounts: "S&S ISA, SIPP, GIA, Junior ISA",
+    investments: "Stocks, ETFs",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash + in specie",
+    customerService: "Online & offline",
+    signupBonus: "Get up to £300 in free bonus shares when you open a new IG account (ISA, SIPP or GIA) using code 'MMS', invest at least £300 and stay invested for 3 months. Capital at risk. T&Cs apply.",
+    signupBonusAffiliate: true,
+    feeNote: { funds: "No platform or trading fees.", etf: "No platform or trading fees." },
+    signupUrl: "https://iggroup.sjv.io/L02GJM", signupAffiliate: true,
+    logo: "https://www.google.com/s2/favicons?domain=ig.com&sz=64",
+  },
+  {
+    name: "XTB", type: "Low-cost DIY", mmsScore: 0.64, offersFunds: false, offersETF: true, trustpilot: "3.7", trustpilotReviews: "2k+", trustpilotUrl: "https://www.trustpilot.com/review/xtb.com", profitable: true,
+    platformFeePct:  { funds: 0,      etf: 0      },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: null   },
+    tradeFee:        { funds: 0,      etf: 0      },
+    regularFee:      { funds: 0,      etf: 0      },
+    fxFee: 0.005,
+    fractional: true, autoInvest: true, pie: true, flexibleISA: true, sipp: false, ux: "Okay",
+    autoInvestNote: "via 'auto invest'",
+    pieNote: "called 'Investment Plans'",
+    accounts: "S&S ISA, GIA, Cash ISA",
+    investments: "Stocks, ETFs",
+    transfersIn: "Cash only",
+    transfersOut: "Cash only",
+    customerService: "Online & offline",
+    signupBonus: "Sign up with code 'MMS' and make a deposit within 7 days. Capital at risk. T&Cs apply.",
+    signupBonusAffiliate: true,
+    feeNote: { funds: "No platform or trading fees (0% trading up to €100k/mo).", etf: "No platform or trading fees (0% trading up to €100k/mo)." },
+    signupUrl: "https://geolink.xtb.com/j7scm", signupAffiliate: true,
+    logo: "https://www.google.com/s2/favicons?domain=xtb.com&sz=64",
+  },
+  {
+    name: "Vanguard", type: "Full feature DIY", mmsScore: null, offersFunds: true, offersETF: true, trustpilot: "4.7", trustpilotReviews: "4k+", trustpilotUrl: "https://www.trustpilot.com/review/vanguardinvestor.co.uk", profitable: true,
+    platformFeePct:       { funds: 0.0015, etf: 0.0015 },
+    platformFeeFlat:      { funds: 0,      etf: 0      },
+    platformFeeCap:       { funds: 375,    etf: 375    },
+    platformFeeThreshold: 32000,
+    tradeFee:        { funds: 0,      etf: 7.50   },
+    regularFee:      { funds: 0,      etf: 0      },
+    freeRegularInvest: true,
+    fxFee: 0,
+    fxFeeNote: "all investments are GBP denominated",
+    fractional: false, autoInvest: true, pie: false, flexibleISA: true, sipp: true, ux: "Okay",
+    accounts: "S&S ISA, SIPP, GIA, Junior ISA",
+    investments: "ETFs, Mutual Funds",
+    investmentsNote: "note: only Vanguard-specific funds available",
+    etfTradeFeeNote: "only if you trade at 'live price'",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash + in specie",
+    customerService: "Online & offline",
+    signupBonus: null, signupBonusAffiliate: false,
+    feeNote: { funds: "£4/mo up to £32k, then 0.15% (cap £375/yr). Offers Vanguard mutual funds and ETFs only.", etf: "£4/mo up to £32k, then 0.15% (cap £375/yr). £7.50 per live trade (free via regular invest)." },
+    signupUrl: "https://www.vanguard.co.uk/", signupAffiliate: false,
+    logo: "https://www.google.com/s2/favicons?domain=vanguard.co.uk&sz=64",
+  },
+  {
+    name: "Hargreaves Lansdown", type: "Full feature DIY", mmsScore: null, trustpilot: "4.4", trustpilotReviews: "20k+", trustpilotUrl: "https://www.trustpilot.com/review/www.hl.co.uk", offersFunds: true, offersETF: true, profitable: true,
+    platformFeePct:  { funds: 0.0035, etf: 0.0035 },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: null,   etf: 150    },
+    tradeFee:        { funds: 1.95,   etf: 6.95   },
+    regularFee:      { funds: 0,      etf: 0      },
+    freeRegularInvest: true,
+    fxFee: 0.0099,
+    fractional: false, autoInvest: true, pie: false, flexibleISA: false, sipp: true, ux: "Okay",
+    accounts: "S&S ISA, SIPP, GIA, Junior ISA, Junior SIPP, LISA",
+    investments: "ETFs, Stocks, Mutual funds",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash + in specie",
+    customerService: "Online & offline",
+    signupBonus: null, signupBonusAffiliate: false,
+    feeNote: {
+      funds: "0.35% up to £250k, then 0.25% up to £1m, then 0.10% up to £2m, then free. No cap. £1.95/trade (free via regular invest).",
+      etf: "0.35%, capped at £150/yr. £6.95/trade (free via regular invest)."
+    },
+    signupUrl: "https://www.hl.co.uk/investment-services/isa", signupAffiliate: false,
+    logo: "https://www.google.com/s2/favicons?domain=hl.co.uk&sz=64",
+  },
+  {
+    name: "AJ Bell", type: "Full feature DIY", mmsScore: null, trustpilot: "4.9", trustpilotReviews: "14k+", trustpilotUrl: "https://www.trustpilot.com/review/ajbell.co.uk", offersFunds: true, offersETF: true, profitable: true,
+    platformFeePct:  { funds: 0.0025, etf: 0.0025 },
+    platformFeeFlat: { funds: 0,      etf: 0      },
+    platformFeeCap:  { funds: 120,    etf: 42     },
+    tradeFee:        { funds: 1.50,   etf: 5      },
+    regularFee:      { funds: 1.50,   etf: 1.50   },
+    fxFee: 0.0075,
+    fractional: false, autoInvest: true, pie: false, flexibleISA: false, sipp: true, ux: "Okay",
+    accounts: "S&S ISA, SIPP, GIA, Junior ISA, LISA",
+    investments: "ETFs, Stocks, Mutual funds",
+    transfersIn: "Cash + in specie",
+    transfersOut: "Cash + in specie",
+    customerService: "Online & offline",
+    signupBonus: null, signupBonusAffiliate: false,
+    feeNote: {
+      funds: "0.25% up to £250k, then 0.10% up to £500k, then free. No cap. £1.50/trade, £1.50 regular investing fee.",
+      etf: "0.25%, capped at £42/yr. £5/trade (£1.50 regular invest)."
+    },
+    signupUrl: "https://www.ajbell.co.uk/stocks-and-shares-isa", signupAffiliate: false,
+    logo: "https://www.google.com/s2/favicons?domain=ajbell.co.uk&sz=64",
+  },
+];
+
+const ETF_DATA = [
+  { ticker:"VAFTGAG", provider:"Vanguard",      providerDomain:"vanguard.co.uk",   region:"Global", index:"FTSE Global All Cap",  type:"Mutual Fund", ter:"0.23%", div:"Accumulation", incomeAlso:true,  note:"Most diversified global mutual fund (7,000+ stocks)", url:"https://www.vanguardinvestor.co.uk/investments/vanguard-ftse-global-all-cap-index-fund-gbp-acc/overview", t212:"❌", ly:"❌", ie:"❌", ft:"✅", xtb:"❌", ig:"❌" },
+  { ticker:"HSFWA", provider:"HSBC",   providerDomain:"assetmanagement.hsbc.co.uk", region:"Global", index:"FTSE All-World", type:"Mutual Fund", ter:"0.13%", div:"Accumulation", incomeAlso:true,  note:"Lower fee than VWRP — only available on select platforms", url:"https://www.assetmanagement.hsbc.co.uk/en/intermediary/funds/gb00bmjjjf91", t212:"❌", ly:"❌", ie:"❌", ft:"✅", xtb:"❌", ig:"❌" },
+  { ticker:"VWRP",    provider:"Vanguard",      providerDomain:"vanguard.co.uk",   region:"Global", index:"FTSE All-World",       type:"ETF",         ter:"0.19%", div:"Accumulation", incomeAlso:true,  note:"Largest global ETF (in terms of AUM)",             url:"https://www.vanguardinvestor.co.uk/investments/vanguard-ftse-all-world-ucits-etf-usd-accumulating/overview",               t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"❌", ig:"✅" },
+  { ticker:"FWRG",    provider:"Invesco",       providerDomain:"invesco.com",       region:"Global", index:"FTSE All-World",       type:"ETF",         ter:"0.15%", div:"Accumulation", incomeAlso:true,  note:"Another global ETF option",          url:"https://www.invesco.com/uk/en/financial-products/etfs/invesco-ftse-all-world-ucits-etf-acc.html",                           t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"✅", ig:"✅" },
+  { ticker:"ACWI",    provider:"SPDR",          providerDomain:"ssga.com",          region:"Global", index:"MSCI ACWI",            type:"ETF",         ter:"0.12%", div:"Accumulation", incomeAlso:false, note:"Lowest fee Accumulation global ETF",     url:"https://www.ssga.com/es/en_gb/intermediary/etfs/state-street-spdr-msci-all-country-world-ucits-etf-acc-spyy-gy",                                       t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"❌", ig:"✅" },
+  { ticker:"PACW",    provider:"Amundi",        providerDomain:"amundi.com",        region:"Global", index:"Solactive GBS Global Markets Large & Mid Cap", type:"ETF", ter:"0.07%", div:"Income", incomeAlso:false, note:"Lowest fee global ETF", noteWarning:"No GBP accumulation version", url:"https://www.amundietf.co.uk/en/professional/products/equity/amundi-prime-all-country-world-ucits-etf-dist/ie0009hf1mk9", t212:"✅", ly:"❌", ie:"✅", ft:"✅", xtb:"❌", ig:"✅" },
+  { ticker:"VUAG",    provider:"Vanguard",      providerDomain:"vanguard.co.uk",   region:"US",     index:"S&P 500",              type:"ETF",         ter:"0.07%", div:"Accumulation", incomeAlso:true,  note:"Vanguard's S&P 500 ETF",                    url:"https://www.vanguardinvestor.co.uk/investments/vanguard-s-and-p-500-ucits-etf-usd-accumulating/portfolio-data",                           t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"✅", ig:"✅" },
+  { ticker:"CSP1",    provider:"iShares",       providerDomain:"ishares.com",       region:"US",     index:"S&P 500",              type:"ETF",         ter:"0.07%", div:"Accumulation", incomeAlso:true,  note:"Largest S&P 500 ETF (in terms of AUM)", url:"https://www.ishares.com/uk/individual/en/products/253743/ishares-sp-500-b-ucits-etf-acc-fund",                              t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"✅", ig:"✅" },
+  { ticker:"SPXL",    provider:"SPDR",          providerDomain:"ssga.com",          region:"US",     index:"S&P 500",              type:"ETF",         ter:"0.03%", div:"Accumulation", incomeAlso:true,  note:"Lowest fee S&P 500 ETF",              url:"https://www.ssga.com/dk/en_gb/intermediary/etfs/state-street-spdr-sp-500-ucits-etf-acc-spyl-gy",                                            t212:"✅", ly:"❌", ie:"✅", ft:"✅", xtb:"❌", ig:"✅" },
+  { ticker:"EQQQ",    provider:"Invesco",       providerDomain:"invesco.com",       region:"US",     index:"Nasdaq 100",           type:"ETF",         ter:"0.30%", div:"Income",       incomeAlso:false, note:"Largest Nasdaq 100 ETF (in terms of AUM)",         url:"https://www.invesco.com/uk/en/financial-products/etfs/invesco-eqqq-nasdaq-100-ucits-etf-dist.html",                                  t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"✅", ig:"✅" },
+  { ticker:"QQQA",    provider:"UBS",           providerDomain:"ubs.com",           region:"US",     index:"Nasdaq 100",           type:"ETF",         ter:"0.13%", div:"Accumulation", incomeAlso:true,  note:"Lowest fee Nasdaq 100 ETF",           url:"https://www.ubs.com/uk/en/assetmanagement/funds/etf/ie000sb4g4i4-ubs-nasdaq-100-ucits-etf-pd001.html",                           t212:"✅", ly:"❌", ie:"✅", ft:"✅", xtb:"❌", ig:"✅" },
+  { ticker:"VUKG",    provider:"Vanguard",      providerDomain:"vanguard.co.uk",   region:"UK",     index:"FTSE 100",             type:"ETF",         ter:"0.09%", div:"Accumulation", incomeAlso:true,  note:"Vanguard's FTSE 100 ETF",                   url:"https://www.vanguardinvestor.co.uk/investments/vanguard-ftse-100-ucits-etf-gbp-accumulating/overview",                            t212:"✅", ly:"❌", ie:"✅", ft:"✅", xtb:"✅", ig:"✅" },
+  { ticker:"CUKX",    provider:"iShares",       providerDomain:"ishares.com",       region:"UK",     index:"FTSE 100",             type:"ETF",         ter:"0.07%", div:"Accumulation", incomeAlso:true,  note:"Largest and lowest fee FTSE 100 ETF",             url:"https://www.ishares.com/uk/individual/en/products/251795/ISHARES-CORE-FTSE-100-UCITS-ETF",                                     t212:"✅", ly:"✅", ie:"✅", ft:"✅", xtb:"✅", ig:"✅" },
+];
+
+// ════════════════════════════════════════════
+// COST CALCULATION ENGINE
+// ════════════════════════════════════════════
+
+function calcTieredFee(portfolio, tiers) {
+  // tiers: [{upTo: 250000, rate: 0.0025}, {upTo: 500000, rate: 0.001}, {upTo: Infinity, rate: 0}]
+  // Applies rate to each slice of the portfolio
+  let fee = 0;
+  let remaining = portfolio;
+  let prev = 0;
+  for (const tier of tiers) {
+    const slice = Math.min(remaining, tier.upTo - prev);
+    if (slice <= 0) break;
+    fee += slice * tier.rate;
+    remaining -= slice;
+    prev = tier.upTo;
+    if (remaining <= 0) break;
+  }
+  return fee;
+}
+
+function calcAnnualCost(p, portfolio, monthlyContrib, tradesPerYear, investType) {
+  const avgPortfolio = portfolio + (monthlyContrib * 6); // midpoint of year
+
+  const t = investType; // 'funds' or 'etf'
+  let cost = 0;
+
+  // 1. PLATFORM FEE
+  if (p.name === "Vanguard") {
+    if (avgPortfolio < p.platformFeeThreshold) {
+      // Under £32k: £4/mo flat fee
+      cost += 4 * 12;
+    } else {
+      // Over £32k: 0.15% capped at £375/yr
+      let fee = avgPortfolio * p.platformFeePct[t];
+      fee = Math.min(fee, p.platformFeeCap[t]);
+      cost += fee;
+    }
+  } else if (p.name === "AJ Bell") {
+    if (t === 'etf') {
+      // ETFs: 0.25% capped at £3.50/mo (£42/yr)
+      let fee = avgPortfolio * 0.0025;
+      cost += Math.min(fee, 42);
+    } else {
+      // Mutual funds: tiered, uncapped
+      // 0-£250k: 0.25%, £250k-£500k: 0.10%, over £500k: 0%
+      cost += calcTieredFee(avgPortfolio, [
+        { upTo: 250000,  rate: 0.0025 },
+        { upTo: 500000,  rate: 0.001  },
+        { upTo: Infinity, rate: 0     },
+      ]);
+    }
+  } else if (p.name === "Hargreaves Lansdown") {
+    if (t === 'etf') {
+      // ETFs: 0.35% capped at £12.50/mo (£150/yr)
+      let fee = avgPortfolio * 0.0035;
+      cost += Math.min(fee, 150);
+    } else {
+      // Mutual funds: tiered, uncapped
+      // 0-£250k: 0.35%, £250k-£1m: 0.25%, £1m-£2m: 0.10%, over £2m: 0%
+      cost += calcTieredFee(avgPortfolio, [
+        { upTo: 250000,   rate: 0.0035 },
+        { upTo: 1000000,  rate: 0.0025 },
+        { upTo: 2000000,  rate: 0.001  },
+        { upTo: Infinity, rate: 0      },
+      ]);
+    }
+  } else {
+    // Percentage fee
+    if (p.platformFeePct[t] > 0) {
+      let fee = avgPortfolio * p.platformFeePct[t];
+      if (p.platformFeeCap[t] !== null) fee = Math.min(fee, p.platformFeeCap[t]);
+      cost += fee;
+    }
+    // Flat monthly fee
+    if (p.platformFeeFlat[t] > 0) {
+      cost += p.platformFeeFlat[t] * 12;
+    }
+  }
+
+  // 2. TRADE FEES — regular invest fee used for monthly contributions where available
+  const rf = p.regularFee[t];
+  const tf = p.tradeFee[t];
+  const monthlyTrades = Math.min(tradesPerYear, 12);
+  const extraTrades   = Math.max(0, tradesPerYear - 12);
+  if (p.freeRegularInvest) {
+    // Regular monthly investing is free — only charge for extra trades beyond 12/yr
+    cost += tf * extraTrades;
+  } else if (rf > 0) {
+    cost += rf * monthlyTrades;
+    cost += tf * extraTrades;
+  } else {
+    cost += tf * tradesPerYear;
+  }
+
+  // FX excluded — GBP-denominated investments assumed
+  return cost;
+}
+
+function parseAmount(id) {
+  const raw = document.getElementById(id).value.replace(/[£,\s]/g, '');
+  return parseFloat(raw) || 0;
+}
+
+function formatWithCommas(input) {
+  input.addEventListener('input', function() {
+    const raw = this.value.replace(/[^0-9]/g, '');
+    if (raw === '') { this.value = ''; return; }
+    this.value = '£' + parseInt(raw, 10).toLocaleString('en-GB');
+  });
+}
+
+function calculate() {
+  const portfolio = parseAmount('portfolio');
+  const monthly = parseAmount('monthly');
+  const trades = 12;
+  const investType = document.querySelector('input[name="investType"]:checked').value; // 'funds' or 'etf'
+  const typeLabel = investType === 'funds' ? 'Mutual Funds' : 'ETFs';
+
+  const results = PLATFORMS.map(p => {
+    const offered = investType === 'funds' ? p.offersFunds : p.offersETF;
+    return {
+      platform: p,
+      totalCost: offered ? calcAnnualCost(p, portfolio, monthly, trades, investType) : null,
+      offered,
+    };
+  });
+
+  // Sort: offered platforms by cost first, N/A platforms at the bottom
+  results.sort((a, b) => {
+    if (a.offered && b.offered) return a.totalCost - b.totalCost;
+    if (a.offered) return -1;
+    if (b.offered) return 1;
+    return 0;
+  });
+
+  const offeredResults = results.filter(r => r.offered);
+  const maxCost = offeredResults.length ? Math.max(...offeredResults.map(r => r.totalCost)) : 0;
+  const minCost = offeredResults.length ? Math.min(...offeredResults.map(r => r.totalCost)) : 0;
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results-title').textContent = 'Your Annual Cost Comparison';
+  document.getElementById('results-sub').textContent =
+    `Based on £${portfolio.toLocaleString()} portfolio · £${monthly.toLocaleString()}/month · ${typeLabel} · 1 trade/month assumed`;
+
+  const list = document.getElementById('results-list');
+  list.innerHTML = '';
+
+  // Build a table
+  const table = document.createElement('table');
+  table.className = 'results-table';
+  table.innerHTML = `<thead><tr>
+    <th>#</th>
+    <th>Platform</th>
+    <th>Note</th>
+    <th>Annual Cost</th>
+  </tr></thead>`;
+  const tbody = document.createElement('tbody');
+
+  // Pre-calculate ranks — equal costs share the same rank
+  const offeredSorted = offeredResults.map(r => r.totalCost).sort((a, b) => a - b);
+  const getRank = (cost) => offeredSorted.indexOf(cost) + 1;
+  const tiedCount = (cost) => offeredSorted.filter(c => c === cost).length;
+
+  results.forEach((r, i) => {
+    const rank = r.offered ? getRank(r.totalCost) : null;
+    const isBest = r.offered && r.totalCost === minCost;
+    const isWorst = r.offered && r.totalCost === maxCost && maxCost !== minCost;
+    const costClass = isBest ? 'best' : '';
+    const note = typeof r.platform.feeNote === 'object' ? r.platform.feeNote[investType] : r.platform.feeNote;
+    const tied = isBest && tiedCount(minCost) > 1;
+    const bestBadge = isBest ? `<span class="res-best-badge">★ ${tied ? 'Joint best' : 'Best for you'}</span>` : '';
+    const rankDisplay = r.offered ? (tiedCount(r.totalCost) > 1 ? `=${rank}` : `${rank}`) : '—';
+
+    const tr = document.createElement('tr');
+    if (isBest) tr.className = 'is-best';
+    if (!r.offered) tr.style.opacity = '0.45';
+
+    tr.innerHTML = `
+      <td class="res-rank">${rankDisplay}</td>
+      <td><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="res-name">${r.platform.name}</span>${bestBadge}</div><span class="res-type">${r.platform.type}</span><span class="res-note-mobile">${r.offered ? (note || '') : 'Does not offer ' + (investType === 'funds' ? 'mutual funds' : 'ETFs/stocks')}</span></td>
+      <td class="res-note">${r.offered ? (note || '—') : 'Does not offer ' + (investType === 'funds' ? 'mutual funds' : 'ETFs/stocks')}</td>
+      <td class="res-cost ${costClass}">${r.offered ? '£' + r.totalCost.toFixed(0) : 'N/A'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  list.appendChild(table);
+
+  document.getElementById('assumptions-box').innerHTML = `
+    <strong>📌 Assumptions used in this calculation</strong>
+    <ul style="margin:10px 0 0 0;padding-left:18px;line-height:1.9">
+      <li>Investment type: <strong>${typeLabel}</strong></li>
+      <li>GBP-denominated investments assumed (no FX fee)</li>
+      <li>1 trade per month assumed</li>
+      <li>Regular invest fee used (if applicable)</li>
+      <li>Fund fees (OCFs/TERs) are not included in this calculation - fund fees apply equally on every platform</li>
+      <li>Fees are estimates - always verify on the platform's website</li>
+    </ul>
+  `;
+
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ════════════════════════════════════════════
+// COMPARISON TABLE
+// ════════════════════════════════════════════
+
+// Sort platforms by MMS score descending, nulls at bottom
+PLATFORMS.sort((a, b) => {
+  if (a.mmsScore === null && b.mmsScore === null) return 0;
+  if (a.mmsScore === null) return 1;
+  if (b.mmsScore === null) return -1;
+  return b.mmsScore - a.mmsScore;
+});
+
+function scoreClass(score) {
+  if (!score) return 'score-b';
+  if (score >= 0.80) return 'score-a';
+  if (score >= 0.65) return 'score-b';
+  return 'score-c';
+}
+
+function renderComparison(filter) {
+  const tbody = document.getElementById('comparison-body');
+  tbody.innerHTML = '';
+  // 'nofee' = no platform fee on funds or ETFs, worked out from the fee data itself
+  const noPlatformFee = p => !p.platformFeePct.funds && !p.platformFeePct.etf && !p.platformFeeFlat.funds && !p.platformFeeFlat.etf;
+  PLATFORMS.filter(p => filter === 'all' || (filter === 'nofee' ? noPlatformFee(p) : p.type.includes(filter))).forEach(p => {
+    const tr = document.createElement('tr');
+    tr.dataset.type = p.type;
+    const initials = p.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+    const fallbackBg = p.logoBg || 'var(--navy)';
+    const logoHtml = (p.logo && !p.useLogoBg)
+      ? `<img class="platform-logo" src="${p.logo}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        + `<div class="platform-logo-fallback" style="display:none;background:${fallbackBg}">${initials}</div>`
+      : `<div class="platform-logo-fallback" style="background:${fallbackBg}">${initials}</div>`;
+
+    const yes = `<td class="td-yes">✓ Yes</td>`;
+    const no  = `<td class="td-no">No</td>`;
+    const uxClass = p.ux === 'Brilliant' ? 'td-yes' : p.ux === 'Good' ? '' : '';
+
+    // Accounts — tax-advantaged first, then GIA, then business, with emoji tags
+    const accountEmoji = {
+      'SIPP': '🏦',
+      'Junior SIPP': '👶',
+      'LISA': '🏠',
+      'Lifetime ISA': '🏠',
+      'Junior ISA': '👶',
+      'Cash ISA': '💵',
+      'Savings': '💰',
+      'GIA': '📂',
+      'Business': '💼',
+    };
+    const accountPriority = ['SIPP', 'GIA', 'Junior ISA', 'Junior SIPP', 'LISA', 'Lifetime ISA', 'Cash ISA', 'Savings', 'Business'];
+    const rawAccounts = p.accounts
+      .split(',')
+      .map(a => a.trim())
+      .filter(a => a && !a.includes('S&S ISA'));
+    const sortedAccounts = [
+      ...accountPriority
+        .map(o => rawAccounts.find(a => a === o || a.startsWith(o + ' ') || a.startsWith(o + '(')))
+        .filter(Boolean),
+      ...rawAccounts.filter(a => !accountPriority.some(o => a === o || a.startsWith(o + ' ') || a.startsWith(o + '(')))
+    ];
+    const accountsHtml = sortedAccounts.map(a => {
+      const emoji = Object.entries(accountEmoji).find(([k]) => a === k || a.startsWith(k + ' ') || a.startsWith(k + '('));
+      return `${emoji ? emoji[1] + ' ' : ''}${a}`;
+    }).join('<br>') || '—';
+
+    // Format investments: alphabetical but Mutual funds always last
+    const investmentsHtml = p.investments
+      .split(',')
+      .map(a => a.trim())
+      .sort((a, b) => {
+        if (a.toLowerCase().includes('mutual')) return 1;
+        if (b.toLowerCase().includes('mutual')) return -1;
+        return a.localeCompare(b);
+      })
+      .join('<br>');
+
+    // Mutual fund trade fee — "N/A" normal, "no mutual funds" muted
+    const fundFeeHtml = !p.offersFunds
+      ? 'N/A<br><span style="color:var(--mid);font-size:11px">no mutual funds</span>'
+      : (p.tradeFee.funds === 0 ? '£0' : '£' + p.tradeFee.funds.toFixed(2));
+
+    const etfFeeHtml = !p.offersETF
+      ? '<span style="color:var(--mid);font-size:11px">N/A</span>'
+      : (p.tradeFee.etf === 0 ? '£0' : '£' + p.tradeFee.etf.toFixed(2));
+
+    // Trustpilot — score plain, "X reviews" is the clickable link
+    const tpHtml = `<span style="font-weight:700;font-size:14px;color:var(--ink)">${p.trustpilot} ⭐</span><br><a href="${p.trustpilotUrl}" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:underline;white-space:nowrap">${p.trustpilotReviews} reviews →</a>`;
+
+    tr.innerHTML = `
+      <td><div class="platform-cell">${logoHtml}<span>${p.name}${p.name === 'Vanguard' ? '<sup class="fnref" style="margin-left:3px">1</sup>' : ''}${p.freetradePlansNote ? '<sup class="fnref" style="margin-left:3px">2</sup>' : ''}</span></div></td>
+      <td style="font-size:13px">${p.signupUrl ? `<a href="${p.signupUrl}" target="_blank" style="color:var(--accent);font-weight:600;text-decoration:underline">${p.name}${p.signupAffiliate ? '*' : ''}</a>` : '—'}</td>
+      <td class="${p.signupBonus ? 'td-yes' : 'td-no'}" style="font-size:13px"><a href="#signup-disclaimers" style="color:inherit;text-decoration:none;font-weight:700">${p.signupBonus ? '✓ Yes' : 'No'}</a></td>
+      <td style="font-size:12px;line-height:1.8">${formatPlatformFee(p)}${p.platformFeeNote ? '<br><span style="color:var(--mid);font-size:11px">' + p.platformFeeNote + '</span>' : ''}</td>
+      <td style="font-size:12px;line-height:1.8">${fundFeeHtml}</td>
+      <td style="font-size:12px;line-height:1.8">${etfFeeHtml}${p.etfTradeFeeNote ? '<br><span style="color:var(--mid);font-size:11px">' + p.etfTradeFeeNote + '</span>' : ''}</td>
+      <td style="font-size:12px">${formatRegularFee(p)}</td>
+      <td style="font-size:12px;line-height:1.8">${
+        p.fxFee > 0 ? (p.fxFee*100).toFixed(2)+'%' : 'N/A'
+      }${p.fxFeeNote ? '<br><span style="color:var(--mid);font-size:11px">' + p.fxFeeNote + '</span>' : ''}</td>
+      <td class="td-fca">✓ Yes</td>
+      <td style="text-align:center">${tpHtml}</td>
+      <td style="font-size:12px;line-height:1.8">${accountsHtml}${p.accountsNote ? '<br><span style="font-size:12px;color:var(--ink)">' + p.accountsNote + '</span>' + (p.accountsSubNote ? '<br><span style="color:var(--mid);font-size:11px">' + p.accountsSubNote + '</span>' : '') : ''}</td>
+      <td style="font-size:12px;line-height:1.8">${investmentsHtml}${p.investmentsNote ? '<br><span style="color:var(--mid);font-size:11px">' + p.investmentsNote + '</span>' : ''}</td>
+      <td class="${p.fractionalLabel ? '' : (p.fractional ? 'td-yes' : 'td-no')}" style="font-size:12px">${p.fractionalNote ? (p.fractionalLabel || '✓ Yes') + '<br><span style="color:var(--mid);font-size:11px;font-weight:400">' + p.fractionalNote + '</span>' : (p.fractional ? '✓ Yes' : 'No')}</td>
+      <td class="${p.autoInvest ? 'td-yes' : 'td-no'}" style="font-size:12px">${p.autoInvestNote ? '✓ Yes<br><span style="color:var(--mid);font-size:11px;font-weight:400">' + p.autoInvestNote + '</span>' : (p.autoInvest ? '✓ Yes' : 'No')}</td>
+      <td class="${p.pie ? 'td-yes' : 'td-no'}" style="font-size:12px">${p.pieNote ? '✓ Yes<br><span style="color:var(--mid);font-size:11px;font-weight:400">' + p.pieNote + '</span>' : (p.pie ? '✓ Yes' : 'No')}</td>
+      <td class="${p.flexibleISA ? 'td-yes' : 'td-no'}" style="font-size:12px">${p.flexibleISANote ? '✓ Yes<br><span style="color:var(--mid);font-size:11px;font-weight:400">' + p.flexibleISANote + '</span>' : (p.flexibleISA ? '✓ Yes' : 'No')}</td>
+      <td class="${uxClass}" style="font-size:12px">${p.ux}</td>
+      <td style="font-size:12px">${p.customerService}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function formatPlatformFee(p) {
+  if (!p.offersFunds && p.offersETF) {
+    // ETF-only platforms
+    const pct = p.platformFeePct.etf;
+    const flat = p.platformFeeFlat.etf;
+    const cap = p.platformFeeCap.etf;
+    if (pct === 0 && flat === 0) return 'None';
+    if (flat > 0) return `£${flat}/mo`;
+    return cap ? `${(pct*100).toFixed(2)}% (cap £${cap}/yr)` : `${(pct*100).toFixed(2)}%`;
+  }
+  if (p.name === 'Freetrade') return 'None';
+  if (p.name === 'Vanguard') return '0.15% (above £32k)<br>£4/mo (below £32k)<br>£375/yr cap';
+  if (p.name === 'Hargreaves Lansdown') return 'Funds: 0.35% to £250k<br>then 0.25% to £1m, no cap<br>Shares/ETFs: 0.35%, cap £150/yr';
+  if (p.name === 'AJ Bell') return 'Funds: 0.25% to £250k<br>then 0.10% to £500k, no cap<br>Shares/ETFs: 0.25%, cap £42/yr';
+  return '—';
+}
+
+function formatFundTradeFee(p) {
+  if (!p.offersFunds) return 'N/A';
+  const f = p.tradeFee.funds;
+  return f === 0 ? 'Free' : '£' + f.toFixed(2);
+}
+
+function formatETFTradeFee(p) {
+  if (!p.offersETF) return 'N/A';
+  const e = p.tradeFee.etf;
+  return e === 0 ? 'Free' : '£' + e.toFixed(2);
+}
+
+function formatRegularFee(p) {
+  const f = p.offersFunds ? p.regularFee.funds : null;
+  const e = p.offersETF  ? p.regularFee.etf   : null;
+  if (f === null && e === null) return 'N/A';
+  if (f === null) return e === 0 ? '£0' : '£' + e.toFixed(2);
+  if (e === null) return f === 0 ? '£0' : '£' + f.toFixed(2);
+  if (f === e) return f === 0 ? '£0' : '£' + f.toFixed(2);
+  return `Funds: ${f === 0 ? '£0' : '£'+f.toFixed(2)} · ETFs: ${e === 0 ? '£0' : '£'+e.toFixed(2)}`;
+}
+
+// Track active fund filters
+let activeFundRegion = 'all';
+let activeFundType = 'all';
+
+function applyFundFilters() {
+  const rows = document.querySelectorAll('#etf-body tr.fund-row');
+  rows.forEach(row => {
+    const matchRegion = activeFundRegion === 'all' || row.dataset.region === activeFundRegion;
+    const matchType   = activeFundType   === 'all' || row.dataset.fundtype === activeFundType;
+    row.style.display = (matchRegion && matchType) ? '' : 'none';
+  });
+  // Update totals
+  const cols = ['t212','ly','ie','ft','xtb','ig'];
+  const visibleData = ETF_DATA.filter(e =>
+    (activeFundRegion === 'all' || e.region === activeFundRegion) &&
+    (activeFundType   === 'all' || e.type   === activeFundType)
+  );
+  const totals = { t212:0, ie:0, ly:0, ft:0, ig:0, xtb:0 };
+  visibleData.forEach(e => cols.forEach(c => { if (e[c] === '✅') totals[c]++; }));
+  const total = visibleData.length;
+  const totalsRow = document.getElementById('etf-totals-row');
+  if (totalsRow) {
+    cols.forEach((c, i) => {
+      totalsRow.cells[i + 7].textContent = `${totals[c]}/${total}`;
+      totalsRow.cells[i + 7].style.color = 'var(--ink)';
+    });
+  }
+}
+
+function filterFundRegion(region, btn) {
+  btn.closest('.filter-row').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  activeFundRegion = region;
+  applyFundFilters();
+}
+
+function filterFunds(type, btn) {
+  btn.closest('.filter-row').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  activeFundType = type;
+  applyFundFilters();
+}
+
+function toggleDetails(btn) {
+  const compact = document.getElementById('comparison-table').classList.toggle('compact');
+  btn.textContent = compact ? 'Show all details' : 'Show fewer details';
+  btn.setAttribute('aria-expanded', String(!compact));
+}
+
+function filterTable(type, btn) {
+  btn.closest('.filter-row').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  renderComparison(type);
+}
+
+// ════════════════════════════════════════════
+// ETF TABLE
+// ════════════════════════════════════════════
+
+function renderETFs() {
+  const tbody = document.getElementById('etf-body');
+  const cols = ['t212','ly','ie','ft','xtb','ig'];
+  const totals = { t212:0, ie:0, ly:0, ft:0, ig:0, xtb:0 };
+
+  ETF_DATA.forEach(e => {
+    const tr = document.createElement('tr');
+    tr.className = 'fund-row';
+    tr.dataset.type = e.type;
+    tr.dataset.region = e.region;
+    tr.dataset.fundtype = e.type;
+    cols.forEach(c => { if (e[c] === '✅') totals[c]++; });
+    const fundTypeBadge = e.type === 'Mutual Fund'
+      ? `<span class="badge badge-yellow" style="font-size:11px">Mutual Fund</span>`
+      : `<span class="badge badge-green" style="font-size:11px">ETF</span>`;
+    const divBadge = e.div === 'Accumulation'
+      ? `<span class="badge badge-green" style="font-size:11px">Accumulation</span>${e.incomeAlso ? '&thinsp;<sup class="fnref">1</sup>' : ''}`
+      : `<span class="badge badge-yellow" style="font-size:11px">Income</span>`;
+    tr.innerHTML = `
+      <td><a href="${e.url}" target="_blank" style="font-weight:700;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border)">${e.ticker}</a></td>
+      <td style="font-size:12px;font-weight:500">
+        <div style="display:flex;align-items:center;gap:7px">
+          ${e.providerDomain ? `<img src="https://www.google.com/s2/favicons?domain=${e.providerDomain}&sz=32" style="width:20px;height:20px;border-radius:4px;border:1px solid var(--border);flex-shrink:0" alt="${e.provider}">` : ''}
+          ${e.provider}
+        </div>
+      </td>
+      <td style="font-size:12px;color:var(--mid)">${e.index}</td>
+      <td>${fundTypeBadge}</td>
+      <td style="font-size:13px;font-weight:600">${e.ter}</td>
+      <td>${divBadge}</td>
+      <td style="font-size:12px">${e.note}${e.noteWarning ? '<br><span style="color:var(--mid);font-size:11px">' + e.noteWarning + '</span>' : ''}</td>
+      <td class="etf-check">${e.t212}</td>
+      <td class="etf-check">${e.ly}</td>
+      <td class="etf-check">${e.ie}</td>
+      <td class="etf-check">${e.ft}</td>
+      <td class="etf-check">${e.xtb}</td>
+      <td class="etf-check">${e.ig}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Totals row
+  const total = ETF_DATA.length;
+  const tr = document.createElement('tr');
+  tr.id = 'etf-totals-row';
+  tr.style.cssText = 'border-top: 2px solid var(--border); background: var(--paper);';
+  tr.innerHTML = `
+    <td style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--mid);padding:12px 14px;position:sticky;left:0;background:var(--paper);z-index:5;box-shadow:2px 0 6px rgba(0,0,0,0.06);">Total available</td>
+    <td></td><td></td><td></td><td></td><td></td><td></td>
+    ${cols.map(c => `<td class="etf-check" style="font-weight:700;font-size:14px;color:var(--ink);">${totals[c]}/${total}</td>`).join('')}
+  `;
+  tbody.appendChild(tr);
+}
+
+// ════════════════════════════════════════════
+// TAB SWITCHING
+// ════════════════════════════════════════════
+
+function showTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+renderComparison('all');
+renderETFs();
+formatWithCommas(document.getElementById('portfolio'));
+formatWithCommas(document.getElementById('monthly'));
+
+// JS tooltip for footnote badges
+const tooltip = document.getElementById('js-tooltip');
+document.querySelectorAll('.fn').forEach(el => {
+  el.addEventListener('mouseenter', e => {
+    tooltip.textContent = el.getAttribute('data-tip');
+    tooltip.style.display = 'block';
+  });
+  el.addEventListener('mousemove', e => {
+    tooltip.style.left = (e.clientX + 12) + 'px';
+    tooltip.style.top  = (e.clientY - 10) + 'px';
+  });
+  el.addEventListener('mouseleave', () => {
+    tooltip.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>
